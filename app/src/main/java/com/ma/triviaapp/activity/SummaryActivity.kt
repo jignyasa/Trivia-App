@@ -67,6 +67,7 @@ class SummaryActivity : AppCompatActivity(),View.OnClickListener {
             R.id.btnHistory->
             {
                 startActivity(Intent(this@SummaryActivity,HistoryActivity::class.java))
+                finish()
             }
         }
     }

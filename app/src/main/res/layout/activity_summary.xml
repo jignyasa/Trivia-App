@@ -45,6 +45,18 @@
                 tools:text="Hello Jignyasa" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:textColor="@color/colorBlack"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvDisplayUserName"
+                android:text="Here are the answers selected:" />
+
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvDisplayQuestion1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -54,7 +66,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvDisplayUserName" />
+                app:layout_constraintTop_toBottomOf="@id/tvLabel" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvDisplayAnswer1"

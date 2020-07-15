@@ -1,5 +1,6 @@
 package com.ma.triviaapp.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -23,6 +24,11 @@ class HistoryActivity : AppCompatActivity() {
         rvHistory.adapter=historyAdapter
         rvHistory.layoutManager=LinearLayoutManager(this)
         getUserData()
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this@HistoryActivity,UserActivity::class.java))
+        finish()
     }
 
     /**
