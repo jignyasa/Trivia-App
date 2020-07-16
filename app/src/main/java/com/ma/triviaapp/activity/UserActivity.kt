@@ -1,11 +1,11 @@
 package com.ma.triviaapp.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.ma.triviaapp.R
 import com.ma.triviaapp.constant.Constant
 import com.ma.triviaapp.roomdb.DatabaseHelper
@@ -17,7 +17,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_user.*
 
-class UserActivity : AppCompatActivity() ,View.OnClickListener{
+class UserActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user)
@@ -25,8 +25,7 @@ class UserActivity : AppCompatActivity() ,View.OnClickListener{
     }
 
     override fun onClick(v: View?) {
-        if(validation())
-        {
+        if (validation()) {
             insertUserData()
         }
     }
@@ -35,14 +34,14 @@ class UserActivity : AppCompatActivity() ,View.OnClickListener{
      * insert user details
      */
     private fun insertUserData() {
-        val item=UserEntity()
-        item.userName=edtUserName.text.toString()
-        item.timeMillies=System.currentTimeMillis()
+        val item = UserEntity()
+        item.userName = edtUserName.text.toString()
+        item.timeMillies = System.currentTimeMillis()
         Observable.fromCallable {
             DatabaseHelper.getDataBase(this).getUserDao().addUserData(item)
         }.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Observer<Long>{
+            .subscribe(object : Observer<Long> {
                 override fun onComplete() {
 
                 }
@@ -52,12 +51,14 @@ class UserActivity : AppCompatActivity() ,View.OnClickListener{
                 }
 
                 override fun onNext(t: Long) {
-                    startActivity(Intent(this@UserActivity,QuestionAnswerActivity::class.java).putExtra(Constant.USER_ID,t.toInt()))
-                    finish()
+                    startActivity(
+                        Intent(this@UserActivity, QuestionAnswerActivity::class.java)
+                            .putExtra(Constant.USER_ID, t.toInt())
+                    )
                 }
 
                 override fun onError(e: Throwable) {
-                    Log.e("error",e.message)
+                    Log.e("UserActivity", "${e.message}")
                 }
 
             })
@@ -66,11 +67,11 @@ class UserActivity : AppCompatActivity() ,View.OnClickListener{
     /**
      * check validation for username
      */
-   private fun validation(): Boolean {
-        if(edtUserName.text.isNullOrBlank()) {
+    private fun validation(): Boolean {
+        if (edtUserName.text.isNullOrBlank()) {
             Toast.makeText(this, "Please enter valid Username", Toast.LENGTH_SHORT).show()
-           return false
-        }else
+            return false
+        } else
             return true
     }
 }

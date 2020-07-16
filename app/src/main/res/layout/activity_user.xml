@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:maxLines="1"
         android:maxLength="50"
+        android:singleLine="true"
         android:hint="@string/what_is_your_name"
         android:textColor="@color/colorBlack"
         android:padding="12dp"

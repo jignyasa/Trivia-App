@@ -13,10 +13,10 @@ interface QuestionAnswerDao {
     @Insert
     fun addQuestionAnswerData(item:QuestionAnswerDetailEntity)
 
-    @Query("SELECT * FROM question_answer")
-    fun getQuestionAnswerData():LiveData<List<QuestionAnswerDetailEntity>>
+    @Insert
+    fun addQuestionAnswerAllData(list:ArrayList<QuestionAnswerDetailEntity>)
 
     @Query("SELECT * FROM question_answer WHERE userId IN (:id)")
-    fun getQuestionAnswerData(id:Int):LiveData<List<QuestionAnswerDetailEntity>>
+    fun getAllQuestionAnswerData(id:Int): List<QuestionAnswerDetailEntity>
 
 }

@@ -9,11 +9,17 @@
         android:icon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.HistoryActivity"/>
-        <activity android:name=".activity.SummaryActivity" />
-        <activity android:name=".activity.QuestionAnswerActivity" />
-        <activity android:name=".activity.UserActivity" />
-        <activity android:name=".activity.SplashActivity">
+        <activity android:name=".activity.HistoryActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.SummaryActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.QuestionAnswerActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.UserActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".activity.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
