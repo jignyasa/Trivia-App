@@ -19,4 +19,7 @@
     <string name="finish">Finish</string>
     <string name="name">Name</string>
     <string name="no_data">no data</string>
+    <string name="you_can_not_complete_test">You can not finish test</string>
+    <string name="history_data">History Data</string>
+    <string name="summary">Summary</string>
 </resources>

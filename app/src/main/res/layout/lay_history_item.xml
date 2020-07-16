@@ -17,7 +17,7 @@
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvGameTime"
+                android:id="@+id/tvGameDate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
@@ -29,7 +29,7 @@
                 tools:text="Game 1" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvName"
+                android:id="@+id/tvUserName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
@@ -38,8 +38,9 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvGameTime"
+                app:layout_constraintTop_toBottomOf="@+id/tvGameDate"
                 tools:text="Hello jigs," />
+
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvQuestionOne"
@@ -53,7 +54,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvName" />
+                app:layout_constraintTop_toBottomOf="@+id/tvUserName" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvQuestionOneAnswer"
