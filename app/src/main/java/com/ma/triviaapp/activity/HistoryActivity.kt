@@ -64,7 +64,6 @@ class HistoryActivity : AppCompatActivity() {
                         val alData=it.filter { questionAnswerDetailEntity -> questionAnswerDetailEntity.userId==historyData.userId }
                         historyData.alQuestionAnswer=alData as ArrayList<QuestionAnswerDetailEntity>
                     }
-                historyAdapter.addData(alHistory)
                 }
             })
     }

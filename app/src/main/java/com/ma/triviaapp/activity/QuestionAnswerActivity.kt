@@ -20,11 +20,13 @@ import kotlinx.android.synthetic.main.activity_question_answer.*
 import kotlinx.android.synthetic.main.lay_first_question.*
 import kotlinx.android.synthetic.main.lay_second_question.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 class QuestionAnswerActivity : AppCompatActivity() ,View.OnClickListener{
     private var answer=""
     private var question=""
     private var userId=0
+    private var alQuestionDetails=ArrayList<QuestionAnswerDetailEntity>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question_answer)
@@ -79,49 +81,29 @@ class QuestionAnswerActivity : AppCompatActivity() ,View.OnClickListener{
         if(answer.isEmpty())
             Toast.makeText(this,"Please select an answer",Toast.LENGTH_SHORT).show()
         else
-            insertData(question,answer)
+            addDataIntoModel(question,answer)
     }
 
     /**
      * insert question answer data
      */
-    private fun insertData(question: String, answer: String) {
+    private fun addDataIntoModel(question: String, answer: String) {
         val item=QuestionAnswerDetailEntity()
         item.userId=userId
         item.question=question
         item.answer=answer
-        Observable.fromCallable {
-            DatabaseHelper.getDataBase(this).getQuestionAnswerDao().addQuestionAnswerData(item)
-        }.subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Observer<Unit>{
-                override fun onComplete() {
-
-                }
-
-                override fun onSubscribe(d: Disposable) {
-
-                }
-
-                override fun onNext(t: Unit) {
-                    if(vfQuestions.displayedChild==0)
-                    {
-                        vfQuestions.showNext()
-                        toolbar.title=getString(R.string.question).plus("\t").plus(vfQuestions.displayedChild+1)
-                    }
-                    else {
-                        startActivity(
-                            Intent(this@QuestionAnswerActivity, SummaryActivity::class.java)
-                                .putExtra(Constant.USER_ID, userId)
-                        )
-                        finish()
-                    }
-                }
-
-                override fun onError(e: Throwable) {
-                    Log.e("error",e.message)
-                }
-
-            })
+        alQuestionDetails.add(item)
+        if(vfQuestions.displayedChild==0)
+        {
+            vfQuestions.showNext()
+            toolbar.title=getString(R.string.question).plus("\t").plus(vfQuestions.displayedChild+1)
+        }
+        else {
+            startActivity(
+                Intent(this@QuestionAnswerActivity, SummaryActivity::class.java)
+                    .putExtra(Constant.USER_ID, userId)
+                    .putExtra(Constant.QUESTION_ANSWER_DATA,alQuestionDetails)
+            )
+        }
     }
 }

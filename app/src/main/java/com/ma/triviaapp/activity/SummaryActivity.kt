@@ -3,15 +3,22 @@ package com.ma.triviaapp.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import com.ma.triviaapp.R
 import com.ma.triviaapp.constant.Constant
 import com.ma.triviaapp.roomdb.DatabaseHelper
+import com.ma.triviaapp.roomdb.entity.QuestionAnswerDetailEntity
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_summary.*
 
 class SummaryActivity : AppCompatActivity(),View.OnClickListener {
     private var userId=0
+    private var alQuestionAnswerData=ArrayList<QuestionAnswerDetailEntity>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_summary)
@@ -19,6 +26,8 @@ class SummaryActivity : AppCompatActivity(),View.OnClickListener {
         if(intent!=null)
         {
             userId=intent.getIntExtra(Constant.USER_ID,0)
+            alQuestionAnswerData=intent.getSerializableExtra(Constant.QUESTION_ANSWER_DATA) as ArrayList<QuestionAnswerDetailEntity>
+            Log.e("data",alQuestionAnswerData.size.toString())
         }
         getUserData()
         getQuestionAnswerDetail()
@@ -30,20 +39,17 @@ class SummaryActivity : AppCompatActivity(),View.OnClickListener {
      * get question answer data for single user
      */
     private fun getQuestionAnswerDetail() {
-        DatabaseHelper.getDataBase(this).getQuestionAnswerDao().getQuestionAnswerData(userId).observe(this,
-            Observer {
-                for(item in it)
-                {
-                    if(item.question.equals(this.getString(R.string.question1))) {
-                        tvDisplayQuestion1.text = item.question
-                        tvDisplayAnswer1.text=item.answer
-                    }
-                    else {
-                        tvDisplayQuestion2.text = item.question
-                        tvDisplayAnswer2.text=item.answer
-                    }
-                }
-            })
+        for(item in alQuestionAnswerData)
+        {
+            if(item.question.equals(this.getString(R.string.question1))) {
+                tvDisplayQuestion1.text = item.question
+                tvDisplayAnswer1.text=item.answer
+            }
+            else {
+                tvDisplayQuestion2.text = item.question
+                tvDisplayAnswer2.text=item.answer
+            }
+        }
     }
 
     /**
@@ -57,12 +63,38 @@ class SummaryActivity : AppCompatActivity(),View.OnClickListener {
 
     }
 
+    fun insertData()
+    {
+        Observable.fromCallable {
+           DatabaseHelper.getDataBase(this).getQuestionAnswerDao().addQuestionAnswerAllData(alQuestionAnswerData)
+       }.subscribeOn(Schedulers.io())
+           .observeOn(AndroidSchedulers.mainThread())
+           .subscribe(object :io.reactivex.Observer<Unit>{
+               override fun onComplete() {
+
+               }
+
+               override fun onSubscribe(d: Disposable) {
+
+               }
+
+               override fun onNext(t: Unit) {
+                   startActivity(Intent(this@SummaryActivity,UserActivity::class.java))
+                   finish()
+               }
+
+               override fun onError(e: Throwable) {
+                   Log.e("error",e.message)
+               }
+
+           })
+    }
+
     override fun onClick(v: View?) {
         when(v?.id)
         {
             R.id.btnFinish->{
-                startActivity(Intent(this@SummaryActivity,UserActivity::class.java))
-                finish()
+                insertData()
             }
             R.id.btnHistory->
             {
