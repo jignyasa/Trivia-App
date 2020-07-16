@@ -20,5 +20,5 @@ interface UserDao {
     fun editUserData(id: Int,isFinish:Boolean)
 
     @Query("SELECT * FROM user")
-    fun getData():List<UserEntity>
+    fun getUserData():List<UserEntity>
 }

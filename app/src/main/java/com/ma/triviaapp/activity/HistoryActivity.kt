@@ -35,7 +35,7 @@ class HistoryActivity : AppCompatActivity() {
      */
     private fun addHistoryData() {
         Observable.fromCallable {
-            val userItem = DatabaseHelper.getDataBase(this).getUserDao().getData()
+            val userItem = DatabaseHelper.getDataBase(this).getUserDao().getUserData()
             val alHistory = ArrayList<HistoryItem>()
             for (userEntity in userItem) {
                 val list = DatabaseHelper.getDataBase(this).getQuestionAnswerDao()

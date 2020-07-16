@@ -11,9 +11,6 @@ import com.ma.triviaapp.roomdb.entity.UserEntity
 interface QuestionAnswerDao {
 
     @Insert
-    fun addQuestionAnswerData(item:QuestionAnswerDetailEntity)
-
-    @Insert
     fun addQuestionAnswerAllData(list:ArrayList<QuestionAnswerDetailEntity>)
 
     @Query("SELECT * FROM question_answer WHERE userId IN (:id)")
