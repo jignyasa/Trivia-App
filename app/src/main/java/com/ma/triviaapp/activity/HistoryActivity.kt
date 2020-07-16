@@ -1,6 +1,7 @@
 package com.ma.triviaapp.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -73,7 +74,7 @@ class HistoryActivity : AppCompatActivity() {
                 }
 
                 override fun onError(e: Throwable) {
-
+                    Log.e("HistoryActivity", e.message)
                 }
             })
 
